@@ -1,0 +1,34 @@
+<div class="container">
+  <h1>Todo List</h1>
+
+  <div class="input-group">
+    <input [(ngModel)]="title" placeholder="Add task..." />
+    <button (click)="add()">Add</button>
+  </div>
+
+  <div *ngFor="let todo of store.todos()" class="todo-item">
+    <div class="left">
+      <input type="checkbox" [checked]="todo.completed" (change)="store.toggleTodo(todo.id)" />
+
+      <ng-container *ngIf="editingId !== todo.id; else editMode">
+        <span [class.completed]="todo.completed">
+          {{ todo.title }}
+        </span>
+      </ng-container>
+
+      <ng-template #editMode>
+        <input [(ngModel)]="editText" />
+      </ng-template>
+    </div>
+
+    <div class="actions">
+      <button *ngIf="editingId !== todo.id" (click)="startEdit(todo)">Edit</button>
+
+      <button *ngIf="editingId === todo.id" (click)="saveEdit(todo.id)">Save</button>
+
+      <button (click)="deleteTodo(todo.id)">Delete</button>
+    </div>
+  </div>
+
+  <p>Completed: {{ store.completedCount() }}</p>
+</div>
