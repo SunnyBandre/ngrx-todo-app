@@ -38,3 +38,8 @@
   text-decoration: line-through;
   color: gray;
 }
+
+.left span {
+  word-break: break-word;
+  overflow-wrap: break-word;
+}
